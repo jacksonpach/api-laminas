@@ -16,120 +16,120 @@ use Tags\Service\TagService;
  */
 class TagsController extends ApiController
 {
-    /** 
-     * @var TagService $service 
-     */
-    protected $service;
+   /** 
+    * @var TagService $service 
+    */
+   protected $service;
 
-    public function __construct(TagService $service)
-    {
-        $this->service = $service;
-    }
+   public function __construct(TagService $service)
+   {
+      $this->service = $service;
+   }
 
-    public function preLoadMethod()
-    {
-        $userId = $this->getPayload()->getSub();
-        $this->service->setUserId($userId);
-    }
+   public function preLoadMethod()
+   {
+      $userId = $this->getPayload()->getSub();
+      $this->service->setUserId($userId);
+   }
 
-    /**
-     * @return JsonModel
-     */
-    public function getList()
-    {
-        $this->preLoadMethod();   
-        $date  = $this->params()->fromQuery('date', (new \Datetime())->format('Y-m-d'));
-        $str   = $this->params()->fromQuery('str', '');
-        $limit = $this->params()->fromQuery('limit', 10);
-        
-        $list = $this->service->getListDql($date, $str, $limit);
+   /**
+    * @return JsonModel
+    */
+   public function getList()
+   {
+      //$this->preLoadMethod();   
+      $date  = $this->params()->fromQuery('date', (new \Datetime())->format('Y-m-d'));
+      $str   = $this->params()->fromQuery('str', '');
+      $limit = $this->params()->fromQuery('limit', 10);
 
-        $data = [
-            'list'   => $list,
-        ];
-        return $this->createResponse($data);
-    }
+      $list = $this->service->getListDql($date, $str, $limit);
 
-    /**
-     * @return JsonModel
-     */
-    public function get($id)
-    {
-        $this->preLoadMethod();
-        $item = $this->service->getItem((int)$id);
-        if (empty($item)) {
-            $this->httpStatusCode = 404;
-        }
-        $data = [
-            'tag'    => $item,
-        ];
-        return $this->createResponse($data);
-    }
+      $data = [
+         'list'   => $list,
+      ];
+      return $this->createResponse($data);
+   }
 
-    /**
-     * @return JsonModel
-     */
-    public function create($data)
-    {
-        $this->preLoadMethod();
-        $status = $this->service->create($data);
-        $id     = $this->service->getId();
-        if (!$status) {
-            $this->httpStatusCode = 400;
-        }
+   /**
+    * @return JsonModel
+    */
+   public function get($id)
+   {
+      $this->preLoadMethod();
+      $item = $this->service->getItem((int)$id);
+      if (empty($item)) {
+         $this->httpStatusCode = 404;
+      }
+      $data = [
+         'tag'    => $item,
+      ];
+      return $this->createResponse($data);
+   }
 
-        $data = [
-            'status' => $status,
-            'id'     => $id,
-        ];
-        return $this->createResponse($data);
-    }
+   /**
+    * @return JsonModel
+    */
+   public function create($data)
+   {
+      $this->preLoadMethod();
+      $status = $this->service->create($data);
+      $id     = $this->service->getId();
+      if (!$status) {
+         $this->httpStatusCode = 400;
+      }
 
-    /**
-     * @return JsonModel
-     */
-    public function update($id, $data)
-    {
-        $this->preLoadMethod();
-        $item = $this->service->update((int)$id, $data);
-        if (empty($item)) {
-            $this->httpStatusCode = 404;
-        }
+      $data = [
+         'status' => $status,
+         'id'     => $id,
+      ];
+      return $this->createResponse($data);
+   }
 
-        $data = [
-            'item'   => $item,
-        ];
-        return $this->createResponse($data);
-    }
-     
-    /**
-     * @return JsonModel
-     */
-    public function replaceList($data)
-    {   
-        $this->preLoadMethod();
-        $data = [
-            'action' => 'replaceList'
-        ];
-        return $this->createResponse($data);
-    }
+   /**
+    * @return JsonModel
+    */
+   public function update($id, $data)
+   {
+      $this->preLoadMethod();
+      $item = $this->service->update((int)$id, $data);
+      if (empty($item)) {
+         $this->httpStatusCode = 404;
+      }
 
-    /**
-     * @return JsonModel
-     */
-    public function delete($id)
-    {
-        $this->preLoadMethod();
-        $item = $this->service->delete((int)$id);
-        $status = true;
-        if (empty($item)) {
-            $this->httpStatusCode = 400;
-            $status = false;
-        } 
-        $data = [
-            'status' => $status,
-            'id' => $id,
-        ];
-        return $this->createResponse($data);
-    }
+      $data = [
+         'item'   => $item,
+      ];
+      return $this->createResponse($data);
+   }
+
+   /**
+    * @return JsonModel
+    */
+   public function replaceList($data)
+   {
+      $this->preLoadMethod();
+      $data = [
+         'action' => 'replaceList'
+      ];
+      return $this->createResponse($data);
+   }
+
+   /**
+    * @return JsonModel
+    */
+   public function delete($id)
+   {
+      $this->preLoadMethod();
+      $item = $this->service->delete((int)$id);
+      $status = true;
+      if (empty($item)) {
+         $this->httpStatusCode = 400;
+         $status = false;
+      }
+      $data = [
+         'status' => $status,
+         'id' => $id,
+      ];
+      return $this->createResponse($data);
+   }
 }

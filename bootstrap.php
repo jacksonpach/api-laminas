@@ -12,6 +12,7 @@ function getEntityManager() : \Doctrine\ORM\EntityManager
         $paths = [
             __DIR__ . '/module/Application/src/Entity',
             __DIR__ . '/module/Tags/src/Entity',
+            __DIR__ . '/module/Atividade/src/Entity',
         ];
         $isDevMode = true;
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);

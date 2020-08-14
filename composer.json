@@ -28,7 +28,8 @@
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Tags\\": "module/Tags/src/",
-            "Users\\": "module/Users/src/"
+            "Users\\": "module/Users/src/",
+            "Atividade\\": "module/Atividade/src/"
         }
     },
     "autoload-dev": {

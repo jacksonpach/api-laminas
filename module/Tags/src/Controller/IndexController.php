@@ -26,8 +26,8 @@ class IndexController extends AbstractActionController
     {   
         /** @var TagService $tagService */
         $tagService = $this->getServiceManager()->get(TagService::class);
-        $list = $tagService->getListTags();
-        
+        //$list = $tagService->getList();
+        $list =[];
         $data = [
             "list" => $list
         ];

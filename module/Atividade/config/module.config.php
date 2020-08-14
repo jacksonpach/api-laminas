@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tags;
+namespace Atividade;
 
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
@@ -11,25 +11,12 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
 return [
     'router' => [
         'routes' => [
-            'tags' => [
+            'atividade' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/tags[/:id]',
+                    'route'    => '/atividade[/:id]',
                     'defaults' => [
-                        'controller'    => Controller\TagsController::class,
-                        'isAuthorizationRequired' => false 
-                    ],
-                    'constraints' => [
-                        'formatter' => '[a-zA-Z0-9_-]*',
-                    ],
-                ],
-            ],
-            'tags-points' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/tags-points',
-                    'defaults' => [
-                        'controller'    => Controller\TagsPointsController::class,
+                        'controller'    => Controller\AtividadeController::class,
                         'isAuthorizationRequired' => false 
                     ],
                     'constraints' => [
@@ -41,9 +28,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
-            Controller\TagsController::class => Controller\Factory\TagsControllerFactory::class,
-            Controller\TagsPointsController::class => Controller\Factory\TagsPointsControllerFactory::class,
+            Controller\AtividadeController::class => Controller\Factory\AtividadeControllerFactory::class,
         ],
     ],
     'view_manager' => [
@@ -69,6 +54,6 @@ return [
         ],
     ],
     'data-fixture' => [
-        'Tags_fixture' => __DIR__ . '/../src/' . __NAMESPACE__ . '/Fixture',
+        'Atividade_fixture' => __DIR__ . '/../src/' . __NAMESPACE__ . '/Atividade',
     ],
 ];

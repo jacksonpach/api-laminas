@@ -19,4 +19,5 @@ return [
     'Application',
     'Tags',
     'Users',
+    'Atividade',
 ];
